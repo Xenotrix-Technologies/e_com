@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Male-Fashion | Wishlist{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>Wishlist</h4>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'index' %}">Home</a>
+                        <a href="{% url 'shop' %}">Shop</a>
+                        <span>Wishlist</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<!-- Wishlist Section Begin -->
+<section class="shopping-cart spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="shopping__cart__table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Price</th>
+                                <th>Action</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for product in wishlist %}
+                            <tr>
+                                <td class="product__cart__item">
+                                    <div class="product__cart__item__pic">
+                                        <img src="{{ product.image.url }}" alt="" style="width: 90px;">
+                                    </div>
+                                    <div class="product__cart__item__text">
+                                        <h6>{{ product.name }}</h6>
+                                        <h5>₹{{ product.price }}</h5>
+                                    </div>
+                                </td>
+                                <td class="cart__price">₹{{ product.price }}</td>
+                                <td class="cart__close">
+                                    <form action="{% url 'cart_add' product.id %}" method="post"
+                                        style="display: inline-block; margin-right: 15px;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="primary-btn"
+                                            style="padding: 10px 20px; font-size: 12px; border: none;">Add to
+                                            Cart</button>
+                                    </form>
+                                </td>
+                                <td class="cart__close">
+                                    <a href="{% url 'wishlist_remove' product.id %}"><i class="fa fa-close"></i></a>
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center" style="padding: 50px 0;">
+                                    <h4>Your wishlist is empty.</h4>
+                                    <br>
+                                    <a href="{% url 'shop' %}" class="primary-btn">Go Shopping</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-6">
+                        <div class="continue__btn">
+                            <a href="{% url 'shop' %}">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Wishlist Section End -->
+{% endblock %}
