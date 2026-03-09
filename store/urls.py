@@ -17,4 +17,19 @@ urlpatterns = [
     path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
     path('wishlist/add/<int:product_id>/', views.wishlist_add, name='wishlist_add'),
     path('wishlist/remove/<int:product_id>/', views.wishlist_remove, name='wishlist_remove'),
+
+    #admin urls
+    path('admin-login/', views.admin_login, name='admin_login'),
+    path('admin-logout/', views.admin_logout, name='admin_logout'),
+    path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/products/', views.admin_products, name='admin_products'),
+    path('dashboard/add-product/', views.admin_add_product, name='admin_add_product'),
+    path('dashboard/edit-product/<int:id>/', views.admin_edit_product, name='admin_edit_product'),
+    path('dashboard/delete-product/<int:id>/', views.admin_delete_product, name='admin_delete_product'),
+
+    # category management
+    path('admin/categories/', views.admin_categories, name='admin_categories'),
+    path('admin/add-category/', views.admin_add_category, name='admin_add_category'),
+    path('admin/delete-category/<int:id>/', views.admin_delete_category, name='admin_delete_category'),
+
 ]

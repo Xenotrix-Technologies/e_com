@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from .models import Product, Category, Blog
+from django.utils.text import slugify
 from .cart import Cart
 from .wishlist import Wishlist
 from django.views.decorators.http import require_POST
@@ -144,3 +147,175 @@ def wishlist_remove(request, product_id):
     product = get_object_or_404(Product, id=product_id)
     wishlist.remove(product)
     return redirect('wishlist_detail')
+
+# -----------------------
+# Admin Login
+# -----------------------
+
+def admin_login(request):
+
+    if request.method == "POST":
+
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None and user.is_staff:
+            login(request, user)
+            return redirect("admin_dashboard")
+
+        else:
+            return render(request,"admin/login.html",{
+                "error":"Invalid credentials"
+            })
+
+    return render(request,"admin/login.html")
+
+
+# -----------------------
+# Logout
+# -----------------------
+
+def admin_logout(request):
+    logout(request)
+    return redirect("admin_login")
+
+# -------------------------------
+# Admin Dashboard
+# -------------------------------
+
+@login_required
+def admin_dashboard(request):
+
+    products = Product.objects.count()
+    categories = Category.objects.count()
+
+    context = {
+        "products": products,
+        "categories": categories
+    }
+
+    return render(request, "admin/dashboard.html", context)
+
+
+# -------------------------------
+# Product List
+# -------------------------------
+@login_required
+def admin_products(request):
+
+    products = Product.objects.all()
+
+    return render(request,"admin/products.html",{
+        "products":products
+    })
+
+
+# -------------------------------
+# Add Product
+# -------------------------------
+@login_required
+def admin_add_product(request):
+
+    categories = Category.objects.all()
+
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+        price = request.POST.get("price")
+        category_id = request.POST.get("category")
+        image = request.FILES.get("image")
+
+        category = Category.objects.get(id=category_id)
+
+        slug = slugify(name)
+
+        Product.objects.create(
+            name=name,
+            slug=slug,
+            price=price,
+            category=category,
+            image=image
+        )
+
+        return redirect("admin_products")
+
+    return render(request,"admin/add_product.html",{"categories":categories})
+
+
+# -------------------------------
+# Edit Product
+# -------------------------------
+@login_required
+def admin_edit_product(request, id):
+
+    product = get_object_or_404(Product, id=id)
+    categories = Category.objects.all()
+
+    if request.method == "POST":
+
+        product.name = request.POST.get("name")
+        product.price = request.POST.get("price")
+
+        category_id = request.POST.get("category")
+        product.category = Category.objects.get(id=category_id)
+
+        if request.FILES.get("image"):
+            product.image = request.FILES.get("image")
+
+        product.save()
+
+        return redirect("admin_products")
+
+    context = {
+        "product": product,
+        "categories": categories
+    }
+
+    return render(request, "admin/edit_product.html", context)
+
+
+# -------------------------------
+# Delete Product
+# -------------------------------
+@login_required
+def admin_delete_product(request, id):
+
+    product = get_object_or_404(Product, id=id)
+    product.delete()
+
+    return redirect("admin_products")
+@login_required
+def admin_add_category(request):
+
+    if request.method == "POST":
+
+        name = request.POST.get("name")
+        slug = request.POST.get("slug")
+
+        Category.objects.create(
+            name=name,
+            slug=slug
+        )
+
+        return redirect("admin_categories")
+
+    return render(request, "admin/add_category.html")
+
+@login_required
+def admin_categories(request):
+
+    categories = Category.objects.all()
+
+    return render(request, "admin/categories.html", {
+        "categories": categories
+    })
+
+@login_required
+def admin_delete_category(request, id):
+
+    category = Category.objects.get(id=id)
+    category.delete()
+
+    return redirect("admin_categories")

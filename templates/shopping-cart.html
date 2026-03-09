@@ -95,11 +95,46 @@
             <div class="col-lg-4">
                 <div class="cart__discount">
                     <h6>Discount codes</h6>
-                    <form action="#">
-                        <input type="text" placeholder="Coupon code">
+                    <form id="couponForm">
+                        <input type="text" id="couponCode" placeholder="Coupon code">
                         <button type="submit">Apply</button>
                     </form>
+                    <p id="discountMessage" style="color:green;"></p>
                 </div>
+                <script>
+                    const cartTotalElement = document.getElementById('cartTotal');
+                    let currentTotal = parseFloat(cartTotalElement.dataset.total); // Get total from data attribute
+                    let discountApplied = false;
+
+                    document.getElementById('couponForm').addEventListener('submit', function(e) {
+                        e.preventDefault();
+
+                        const code = document.getElementById('couponCode').value.trim().toUpperCase();
+                        const message = document.getElementById('discountMessage');
+
+                        // Reset message color
+                        message.style.color = 'green';
+
+                        if (discountApplied) {
+                            message.textContent = `Discount already applied. Current total: $${currentTotal.toFixed(2)}`;
+                            return;
+                        }
+
+                        if (code === 'WELCOME365') {
+                            const discount = currentTotal * 0.10; // 10% discount
+                            currentTotal -= discount;
+                            discountApplied = true;
+                            message.textContent = `Coupon applied! You saved $${discount.toFixed(2)}. New total: $${currentTotal.toFixed(2)}`;
+
+                            // Update total on the page
+                            cartTotalElement.textContent = `$${currentTotal.toFixed(2)}`;
+                            cartTotalElement.dataset.total = currentTotal.toFixed(2);
+                        } else {
+                            message.style.color = 'red';
+                            message.textContent = 'Invalid coupon code.';
+                        }
+                    });
+                    </script>
                 <div class="cart__total">
                     <h6>Cart total</h6>
                     <ul>

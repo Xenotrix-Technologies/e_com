@@ -1,0 +1,35 @@
+{% extends "admin/base_admin.html" %}
+
+{% block content %}
+
+<h2>Add Category</h2>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<div class="mb-3">
+
+<label>Category Name</label>
+
+<input type="text" name="name" class="form-control">
+
+</div>
+
+<div class="mb-3">
+
+<label>Slug</label>
+
+<input type="text" name="slug" class="form-control">
+
+</div>
+
+<button class="btn btn-success">
+
+Create Category
+
+</button>
+
+</form>
+
+{% endblock %}
