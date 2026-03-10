@@ -1,0 +1,258 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- PAGE HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<div>
+<h2 class="fw-bold mb-1">Reports</h2>
+<p class="text-muted mb-0">
+Inventory analytics and sales reports
+</p>
+</div>
+
+<div>
+<a href="{% url 'admin_reports' %}" class="btn btn-success btn-sm">
+<i class="ti ti-download"></i> Export Report
+</a>
+</div>
+
+</div>
+
+
+<!-- STATS CARDS -->
+
+<div class="row g-3 mb-4">
+
+<div class="col-md-3">
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6 class="text-muted">Total Revenue</h6>
+<h3 class="fw-bold">₹ {{ total_revenue }}</h3>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6 class="text-muted">Products Sold</h6>
+<h3 class="fw-bold">{{ products_sold }}</h3>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6 class="text-muted">Low Stock Items</h6>
+<h3 class="fw-bold text-warning">{{ low_stock }}</h3>
+
+</div>
+</div>
+</div>
+
+
+<div class="col-md-3">
+<div class="card shadow-sm">
+<div class="card-body">
+
+<h6 class="text-muted">Out of Stock</h6>
+<h3 class="fw-bold text-danger">{{ out_stock }}</h3>
+
+</div>
+</div>
+</div>
+
+</div>
+
+
+<!-- SALES CHART -->
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-body">
+
+<div class="d-flex justify-content-between mb-3">
+
+<h5 class="mb-0">Sales Overview</h5>
+
+<form method="GET" class="d-flex gap-2">
+
+<input type="date" name="start" class="form-control form-control-sm">
+<input type="date" name="end" class="form-control form-control-sm">
+
+<button class="btn btn-primary btn-sm">
+Filter
+</button>
+
+</form>
+
+</div>
+
+<canvas id="salesChart" height="100"></canvas>
+
+</div>
+
+</div>
+
+
+
+<!-- TOP PRODUCTS -->
+
+<div class="card shadow-sm">
+
+<div class="card-body">
+
+<h5 class="mb-4">Top Products</h5>
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle">
+
+<thead class="table-light">
+
+<tr>
+
+<th>Product</th>
+<th>Units Sold</th>
+<th>Revenue</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for item in top_products %}
+
+<tr>
+
+<td class="d-flex align-items-center">
+
+<img src="{{ item.product.image.url }}" width="40" class="rounded me-2">
+
+{{ item.product.name }}
+
+</td>
+
+<td>{{ item.total_qty }}</td>
+
+<td>₹ {{ item.total_sales }}</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="3" class="text-center text-muted py-3">
+No sales data available
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<!-- LOW STOCK REPORT -->
+
+<div class="card shadow-sm mt-4">
+
+<div class="card-body">
+
+<h5 class="mb-3">Low Stock Products</h5>
+
+<div class="table-responsive">
+
+<table class="table table-bordered">
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Category</th>
+<th>Stock</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for product in low_stock_products %}
+
+<tr>
+
+<td>{{ product.name }}</td>
+
+<td>{{ product.category.name }}</td>
+
+<td>
+
+<span class="badge bg-warning">
+
+{{ product.stock }}
+
+</span>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="3" class="text-center text-muted">
+No low stock products
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+<!-- CHART JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('salesChart')
+const salesChart = new Chart(ctx, {type: 'line',})
+
+</script>
+
+{% endblock %}

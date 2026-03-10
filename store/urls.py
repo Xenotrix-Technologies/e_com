@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin-login/', views.admin_login, name='admin_login'),
     path('admin-logout/', views.admin_logout, name='admin_logout'),
     path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('dashboard/inventory/', views.inventory, name='inventory'),
     path('dashboard/products/', views.admin_products, name='admin_products'),
     path('dashboard/add-product/', views.admin_add_product, name='admin_add_product'),
     path('dashboard/edit-product/<int:id>/', views.admin_edit_product, name='admin_edit_product'),
@@ -31,5 +32,9 @@ urlpatterns = [
     path('admin/categories/', views.admin_categories, name='admin_categories'),
     path('admin/add-category/', views.admin_add_category, name='admin_add_category'),
     path('admin/delete-category/<int:id>/', views.admin_delete_category, name='admin_delete_category'),
+    path("dashboard/reports/", views.admin_reports, name="admin_reports"),
 
+    # order management
+    path('dashboard/orders/', views.admin_orders, name='admin_orders'),
+    path('dashboard/order/<int:id>/', views.admin_order_detail, name='admin_order_detail'),
 ]

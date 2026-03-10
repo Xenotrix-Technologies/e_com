@@ -8,15 +8,20 @@
 Add Product
 </a>
 
-<table class="table table-bordered">
+<table class="table table-bordered table-striped">
 
+<thead>
 <tr>
 <th>Name</th>
 <th>Price</th>
 <th>Category</th>
+<th>Stock</th>
 <th>Image</th>
 <th>Action</th>
 </tr>
+</thead>
+
+<tbody>
 
 {% for product in products %}
 
@@ -29,7 +34,17 @@ Add Product
 <td>{{ product.category.name }}</td>
 
 <td>
+{% if product.stock > 0 %}
+<span class="badge bg-success">{{ product.stock }}</span>
+{% else %}
+<span class="badge bg-danger">Out of Stock</span>
+{% endif %}
+</td>
+
+<td>
+{% if product.image %}
 <img src="{{ product.image.url }}" width="60">
+{% endif %}
 </td>
 
 <td>
@@ -46,7 +61,15 @@ Delete
 
 </tr>
 
+{% empty %}
+
+<tr>
+<td colspan="6" class="text-center">No products found</td>
+</tr>
+
 {% endfor %}
+
+</tbody>
 
 </table>
 
