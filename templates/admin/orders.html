@@ -1,0 +1,57 @@
+{% extends "admin/base_admin.html" %}
+
+{% block content %}
+
+<h2 class="mb-4">Orders</h2>
+
+<table class="table table-bordered">
+
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Email</th>
+<th>Total</th>
+<th>Status</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
+
+{% for order in orders %}
+
+<tr>
+
+<td>#{{ order.id }}</td>
+
+<td>{{ order.customer_name }}</td>
+
+<td>{{ order.email }}</td>
+
+<td>₹{{ order.total_price }}</td>
+
+<td>
+
+<span class="badge bg-info">
+{{ order.status }}
+</span>
+
+</td>
+
+<td>{{ order.created_at }}</td>
+
+<td>
+
+<a href="{% url 'admin_order_detail' order.id %}" class="btn btn-sm btn-primary">
+
+View
+
+</a>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

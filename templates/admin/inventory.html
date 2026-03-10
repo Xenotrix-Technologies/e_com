@@ -1,0 +1,284 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- PAGE HEADER -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+<div>
+<h2 class="fw-bold mb-1">Product Inventory</h2>
+<p class="text-muted mb-0">
+Manage all store products
+</p>
+</div>
+
+<a href="{% url 'admin_add_product' %}" class="btn btn-primary">
+<i class="ti ti-plus"></i> Add Product
+</a>
+
+</div>
+
+
+
+<!-- SEARCH BAR -->
+
+<div class="card mb-4 shadow-sm">
+
+<div class="card-body">
+
+<form method="GET">
+
+<div class="input-group">
+
+<input
+type="text"
+name="search"
+value="{{ request.GET.search }}"
+class="form-control"
+placeholder="Search product...">
+
+<button class="btn btn-primary">
+<i class="ti ti-search"></i>
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+
+
+<!-- PRODUCT TABLE -->
+
+<div class="card shadow-sm">
+
+<div class="table-responsive">
+
+<table class="table table-hover align-middle mb-0">
+
+<thead class="table-light">
+
+<tr>
+<th width="320">Product</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Created</th>
+<th class="text-end">Action</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for product in products %}
+
+<tr>
+
+<!-- PRODUCT -->
+<td>
+
+<div class="d-flex align-items-center">
+
+{% if product.image %}
+<img src="{{ product.image.url }}" width="50" class="rounded me-3">
+{% else %}
+<img src="{% static 'assets/images/no-image.png' %}" width="50" class="rounded me-3">
+{% endif %}
+
+<div>
+
+<div class="fw-semibold">
+{{ product.name }}
+</div>
+
+<small class="text-muted">
+Slug: {{ product.slug }}
+</small>
+
+</div>
+
+</div>
+
+</td>
+
+
+<!-- CATEGORY -->
+<td>
+{{ product.category.name }}
+</td>
+
+
+<!-- PRICE -->
+<td>
+₹ {{ product.price }}
+</td>
+
+
+<!-- STOCK -->
+<td>
+
+{% if product.stock <= 5 %}
+
+<span class="badge bg-danger">
+{{ product.stock }} Low
+</span>
+
+{% elif product.stock <= 20 %}
+
+<span class="badge bg-warning text-dark">
+{{ product.stock }}
+</span>
+
+{% else %}
+
+<span class="badge bg-success">
+{{ product.stock }}
+</span>
+
+{% endif %}
+
+</td>
+
+
+<!-- STATUS -->
+<td>
+
+{% if product.is_available %}
+
+<span class="badge bg-success">
+Available
+</span>
+
+{% else %}
+
+<span class="badge bg-secondary">
+Unavailable
+</span>
+
+{% endif %}
+
+</td>
+
+
+<!-- CREATED -->
+<td>
+
+{{ product.created_at|date:"d M Y" }}
+
+</td>
+
+
+<!-- ACTION -->
+<td class="text-end">
+
+<a href="{% url 'admin_edit_product' product.id %}" class="btn btn-sm btn-light">
+<i class="ti ti-edit">Edit</i>
+</a>
+
+<a href="{% url 'admin_delete_product' product.id %}" class="btn btn-sm btn-light text-danger">
+<i class="ti ti-trash">Delete</i>
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="7" class="text-center py-4 text-muted">
+
+<i class="ti ti-package-off fs-2"></i>
+
+<p class="mt-2 mb-0">
+No products available
+</p>
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+
+
+<!-- PAGINATION -->
+
+{% if products.has_other_pages %}
+
+<div class="card-footer bg-white">
+
+<nav class="d-flex justify-content-end">
+
+<ul class="pagination mb-0">
+
+{% if products.has_previous %}
+
+<li class="page-item">
+<a class="page-link" href="?page={{ products.previous_page_number }}&search={{ request.GET.search }}">
+Previous
+</a>
+</li>
+
+{% endif %}
+
+{% for num in products.paginator.page_range %}
+
+{% if products.number == num %}
+
+<li class="page-item active">
+<a class="page-link">{{ num }}</a>
+</li>
+
+{% elif num > products.number|add:'-3' and num < products.number|add:'3' %}
+
+<li class="page-item">
+<a class="page-link" href="?page={{ num }}&search={{ request.GET.search }}">
+{{ num }}
+</a>
+</li>
+
+{% endif %}
+
+{% endfor %}
+
+{% if products.has_next %}
+
+<li class="page-item">
+<a class="page-link" href="?page={{ products.next_page_number }}&search={{ request.GET.search }}">
+Next
+</a>
+</li>
+
+{% endif %}
+
+</ul>
+
+</nav>
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+</div>
+
+{% endblock %}

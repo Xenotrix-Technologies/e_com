@@ -295,18 +295,16 @@
                                 style="display:inline-flex; align-items:center; gap:12px;">
                                 {% if selected_category %}<input type="hidden" name="category"
                                     value="{{ selected_category }}">{% endif %}
-                                {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif
-                                %}
-                                {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif
-                                %}
+                                {% if min_price %}<input type="hidden" name="min_price" value="{{ min_price }}">{% endif %}
+                                {% if max_price %}<input type="hidden" name="max_price" value="{{ max_price }}">{% endif %}
                                 <label for="sortSelect" style="font-size:14px; color:#666; font-weight: 600;">Sort
                                     By</label>
                                 <select name="sort" id="sortSelect" onchange="this.form.submit()">
-                                    <option value="newest" {% if sort=='newest' %}selected{% endif %}>Newest Arrivals
+                                    <option value="newest" {% if sort == 'newest' %}selected{% endif %}>Newest Arrivals
                                     </option>
-                                    <option value="price_asc" {% if sort=='price_asc' %}selected{% endif %}>Price: Low
+                                    <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Price: Low
                                         to High</option>
-                                    <option value="price_desc" {% if sort=='price_desc' %}selected{% endif %}>Price:
+                                    <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Price:
                                         High to Low</option>
                                 </select>
                             </form>
@@ -406,4 +404,4 @@
     </div>
 </section>
 <!-- Shop Section End -->
-{% endblock %}
+{% endblock content %}

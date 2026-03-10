@@ -1,0 +1,274 @@
+{% extends "admin/base_admin.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+<!-- PAGE TITLE -->
+<div class="row">
+<div class="col-12 mb-4">
+<h1 class="fs-3">Dashboard</h1>
+<p class="text-muted">Welcome to your store dashboard</p>
+</div>
+</div>
+
+
+<!-- STATS CARDS -->
+<div class="row g-3 mb-4">
+
+<div class="col-lg-3">
+<div class="card p-4 bg-primary bg-opacity-10 border border-primary border-opacity-25">
+<div class="d-flex gap-3">
+<div class="icon-shape bg-primary text-white rounded p-3">
+<i class="ti ti-report-analytics"></i>
+</div>
+
+<div>
+<h6>Total Sales</h6>
+<h4 class="fw-bold">₹{{ total_sales }}</h4>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3">
+<div class="card p-4 bg-success bg-opacity-10 border border-success border-opacity-25">
+<div class="d-flex gap-3">
+<div class="icon-shape bg-success text-white rounded p-3">
+<i class="ti ti-repeat"></i>
+</div>
+
+<div>
+<h6>Total Orders</h6>
+<h4 class="fw-bold">{{ total_orders }}</h4>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3">
+<div class="card p-4 bg-info bg-opacity-10 border border-info border-opacity-25">
+<div class="d-flex gap-3">
+<div class="icon-shape bg-info text-white rounded p-3">
+<i class="ti ti-currency-dollar"></i>
+</div>
+
+<div>
+<h6>Total Products</h6>
+<h4 class="fw-bold">{{ total_products }}</h4>
+</div>
+</div>
+</div>
+</div>
+
+
+<div class="col-lg-3">
+<div class="card p-4 bg-warning bg-opacity-10 border border-warning border-opacity-25">
+<div class="d-flex gap-3">
+<div class="icon-shape bg-warning text-white rounded p-3">
+<i class="ti ti-users"></i>
+</div>
+
+<div>
+<h6>Total Customers</h6>
+<h4 class="fw-bold">{{ total_customers }}</h4>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+<!-- CHARTS -->
+<div class="row g-3 mb-4">
+
+<div class="col-lg-6">
+
+<div class="card">
+<div class="card-header d-flex justify-content-between">
+<h5>Sales vs Purchase</h5>
+</div>
+
+<div class="card-body">
+
+<div id="salesChart"></div>
+
+</div>
+</div>
+
+</div>
+
+
+<div class="col-lg-6">
+
+<div class="card">
+<div class="card-header">
+<h5>Customers Overview</h5>
+</div>
+
+<div class="card-body">
+
+<div class="row text-center">
+
+<div class="col-4">
+<h4>{{ suppliers }}</h4>
+<p class="text-muted">Suppliers</p>
+</div>
+
+<div class="col-4">
+<h4>{{ customers }}</h4>
+<p class="text-muted">Customers</p>
+</div>
+
+<div class="col-4">
+<h4>{{ total_orders }}</h4>
+<p class="text-muted">Orders</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+
+<!-- PRODUCT + SALES SECTION -->
+
+<div class="row g-3">
+
+<!-- TOP SELLING PRODUCTS -->
+
+<div class="col-lg-4">
+
+<div class="card">
+
+<div class="card-header">
+<h5>Top Selling Products</h5>
+</div>
+
+<ul class="list-group list-group-flush">
+
+{% for product in top_products %}
+
+<li class="list-group-item d-flex align-items-center gap-3">
+
+<img src="{{ product.image.url }}" width="48">
+
+<div class="flex-grow-1">
+
+<p class="mb-1">{{ product.name }}</p>
+
+<small class="text-muted">
+₹{{ product.price }}
+</small>
+
+</div>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- LOW STOCK -->
+
+<div class="col-lg-4">
+
+<div class="card">
+
+<div class="card-header">
+<h5>Low Stock Products</h5>
+</div>
+
+<ul class="list-group list-group-flush">
+
+{% for product in low_stock_products %}
+
+<li class="list-group-item d-flex align-items-center gap-3">
+
+<img src="{{ product.image.url }}" width="48">
+
+<div class="flex-grow-1">
+
+<p class="mb-1">{{ product.name }}</p>
+
+<small>ID: {{ product.id }}</small>
+
+</div>
+
+<div>
+
+<span class="badge bg-danger">
+{{ product.stock }}
+</span>
+
+</div>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+
+<!-- RECENT ORDERS -->
+
+<div class="col-lg-4">
+
+<div class="card">
+
+<div class="card-header">
+<h5>Recent Orders</h5>
+</div>
+
+<ul class="list-group list-group-flush">
+
+{% for order in recent_orders %}
+
+<li class="list-group-item d-flex justify-content-between">
+
+<div>
+
+<p class="mb-1">Order #{{ order.id }}</p>
+
+<small class="text-muted">
+₹{{ order.total_price }}
+</small>
+
+</div>
+
+<span class="badge bg-success">
+{{ order.status }}
+</span>
+
+</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}
