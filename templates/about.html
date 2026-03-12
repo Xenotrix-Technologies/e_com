@@ -1,0 +1,180 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Male-Fashion | About{% endblock %}
+
+{% block content %}
+
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-option">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>About Us</h4>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'index' %}">Home</a>
+                        <span>About</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+
+<!-- About Section Begin -->
+<section class="about spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="about__pic">
+                    <img src="{% static 'img/about/about-us.jpg' %}" alt="About Image">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about__text">
+                    <h2>Who We Are</h2>
+                    <p>
+                        Male-Fashion is a modern fashion store offering high quality clothing
+                        for men. Our mission is to provide stylish, comfortable and affordable
+                        fashion products for every occasion.
+                    </p>
+                    <p>
+                        We focus on premium materials, modern design and customer satisfaction.
+                        Our store combines elegance and innovation to create a unique shopping
+                        experience.
+                    </p>
+
+                    <div class="about__features">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="about__feature__item">
+                                    <h5>Premium Quality</h5>
+                                    <p>All products are made with high quality materials.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="about__feature__item">
+                                    <h5>Modern Design</h5>
+                                    <p>Trendy styles created for modern fashion lovers.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="about__feature__item">
+                                    <h5>Fast Delivery</h5>
+                                    <p>Quick and secure shipping to your doorstep.</p>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="about__feature__item">
+                                    <h5>Customer Support</h5>
+                                    <p>24/7 support for all your shopping needs.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- About Section End -->
+
+
+<!-- Team Section Begin -->
+<section class="team spad">
+    <div class="container">
+        <div class="section-title">
+            <span>Our Team</span>
+            <h2>Meet Our Team</h2>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team__item">
+                    <img src="{% static 'img/about/team-1.jpg' %}" alt="">
+                    <h4>John Smith</h4>
+                    <span>Founder</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team__item">
+                    <img src="{% static 'img/about/team-2.jpg' %}" alt="">
+                    <h4>Michael Lee</h4>
+                    <span>Designer</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team__item">
+                    <img src="{% static 'img/about/team-3.jpg' %}" alt="">
+                    <h4>David Brown</h4>
+                    <span>Marketing</span>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="team__item">
+                    <img src="{% static 'img/about/team-4.jpg' %}" alt="">
+                    <h4>Chris Evans</h4>
+                    <span>Support</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Team Section End -->
+
+
+<!-- Services Section Begin -->
+<section class="services spad">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-3 col-md-6">
+                <div class="services__item">
+                    <i class="fa fa-truck"></i>
+                    <h6>Free Shipping</h6>
+                    <p>Free shipping on all orders over $50</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="services__item">
+                    <i class="fa fa-refresh"></i>
+                    <h6>30 Day Return</h6>
+                    <p>Easy return within 30 days</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="services__item">
+                    <i class="fa fa-lock"></i>
+                    <h6>Secure Payment</h6>
+                    <p>100% secure payment system</p>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="services__item">
+                    <i class="fa fa-headphones"></i>
+                    <h6>24/7 Support</h6>
+                    <p>Dedicated support team</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Services Section End -->
+
+{% endblock %}
