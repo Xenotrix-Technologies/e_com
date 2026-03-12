@@ -87,19 +87,29 @@
                 <div class="col-lg-6 col-md-6">
                     <nav class="header__menu mobile-menu">
                         <ul>
-                            <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}"><a
-                                    href="{% url 'index' %}">Home</a></li>
-                            <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}"><a
-                                    href="{% url 'shop' %}">Shop</a></li>
-                            <li class="{% if request.resolver_match.url_name == 'blog' %}active{% endif %}"><a
-                                    href="{% url 'blog' %}">Blog</a></li>
-                            <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}"><a
-                                    href="{% url 'contact' %}">Contacts</a></li>
-                            <li><a href="#">Pages</a>
+                            <li class="{% if request.resolver_match.url_name == 'index' %}active{% endif %}">
+                                <a href="{% url 'index' %}">Home</a>
+                            </li>
+
+                            <li class="{% if request.resolver_match.url_name == 'shop' %}active{% endif %}">
+                                <a href="{% url 'shop' %}">Shop</a>
                                 <ul class="dropdown">
-                                    <li><a href="{% url 'shopping_cart' %}">Shopping Cart</a></li>
-                                    <li><a href="{% url 'checkout' %}">Check Out</a></li>
+                                    <li><a href="{% url 'shop' %}?category=mens">Mens</a></li>
+                                    <li><a href="{% url 'shop' %}?category=womens">Womens</a></li>
+                                    <li><a href="{% url 'shop' %}?category=kids">Kids</a></li>
                                 </ul>
+                            </li>
+
+                            <li class="{% if request.resolver_match.url_name == 'blog' %}active{% endif %}">
+                                <a href="{% url 'blog' %}">Blog</a>
+                            </li>
+
+                            <li class="{% if request.resolver_match.url_name == 'contact' %}active{% endif %}">
+                                <a href="{% url 'contact' %}">Contact</a>
+                            </li>
+
+                            <li class="{% if request.resolver_match.url_name == 'about' %}active{% endif %}">
+                                <a href="{% url 'about' %}">About</a>
                             </li>
                         </ul>
                     </nav>
@@ -149,7 +159,7 @@
                         <ul>
                             <li><a href="{% url 'shop' %}">Shop</a></li>
                             <li><a href="{% url 'shop' %}">Trending Products</a></li>
-                            <li><a href="{% url 'shop' %}">About Us</a></li>
+                            <li><a href="{% url 'about' %}">About Us</a></li>
                             <li><a href="{% url 'blog' %}">Blog</a></li>
                         </ul>
                     </div>

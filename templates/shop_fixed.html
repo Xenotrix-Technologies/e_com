@@ -194,36 +194,36 @@
                             <!-- Categories Card -->
                             <div class="card">
                                 <div class="card-heading">
-                                    <a data-bs-toggle="collapse" data-bs-target="#collapseCategories"
-                                        class="active">Categories</a>
+                                    <a data-bs-toggle="collapse"
+                                    data-bs-target="#collapseCategories"
+                                    class="active">
+                                        Categories
+                                    </a>
                                 </div>
+
                                 <div id="collapseCategories" class="collapse show" data-bs-parent="#accordionSidebar">
                                     <div class="card-body">
                                         <div class="shop__sidebar__categories">
                                             <ul class="nice-scroll" style="height: auto; max-height: 250px;">
+
                                                 <li style="margin-bottom: 8px;">
-                                                    {% if not selected_category %}
-                                                    <a href="{% url 'shop' %}"
-                                                        style="color:#e11f21; font-weight:700; font-size: 15px;">All
-                                                        Products ({{ categories|length }})</a>
-                                                    {% else %}
-                                                    <a href="{% url 'shop' %}" style="font-size: 15px;">All Products ({{
-                                                        categories|length }})</a>
-                                                    {% endif %}
+                                                    <a href="{% url 'shop' %}{% if sort %}?sort={{ sort }}{% endif %}"
+                                                    style="{% if not selected_category %}color:#e11f21; font-weight:700;{% endif %} font-size:15px;">
+                                                        All Products ({{ products|length }})
+                                                    </a>
                                                 </li>
+
                                                 {% for category in categories %}
                                                 <li style="margin-bottom: 8px;">
-                                                    {% if selected_category == category.slug %}
                                                     <a href="{% url 'shop' %}?category={{ category.slug }}{% if sort %}&sort={{ sort }}{% endif %}"
-                                                        style="color:#e11f21; font-weight:700; font-size: 15px;">{{
-                                                        category.name }} ({{ category.products.count }})</a>
-                                                    {% else %}
-                                                    <a style="font-size: 15px;"
-                                                        href="{% url 'shop' %}?category={{ category.slug }}{% if sort %}&sort={{ sort }}{% endif %}">
-                                                        {{ category.name }} ({{ category.products.count }})</a>
-                                                    {% endif %}
+                                                    style="font-size:15px;{% if selected_category == category.slug %} color:#e11f21; font-weight:700;{% endif %}">
+                                                        {{ category.name }} ({{ category.products.count }})
+                                                    </a>
                                                 </li>
+                                                {% empty %}
+                                                <li>No categories available</li>
                                                 {% endfor %}
+
                                             </ul>
                                         </div>
                                     </div>

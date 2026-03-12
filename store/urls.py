@@ -17,6 +17,8 @@ urlpatterns = [
     path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
     path('wishlist/add/<int:product_id>/', views.wishlist_add, name='wishlist_add'),
     path('wishlist/remove/<int:product_id>/', views.wishlist_remove, name='wishlist_remove'),
+    path('contact/', views.contact_view, name='contact'),
+    path('about/', views.about, name='about'),
 
     #admin urls
     path('admin-login/', views.admin_login, name='admin_login'),

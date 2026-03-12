@@ -8,6 +8,10 @@ from .cart import Cart
 from .wishlist import Wishlist
 from django.views.decorators.http import require_POST
 from django.db.models import Q, Sum
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
 
 def index(request):
     products = Product.objects.all()[:8]
@@ -17,6 +21,9 @@ def index(request):
         'blogs': blogs,
     }
     return render(request, 'index.html', context)
+
+def about(request):
+    return render(request, "about.html")
 
 def shop(request):
     products = Product.objects.filter(is_available=True)
@@ -93,7 +100,7 @@ def cart_add(request, product_id):
     cart = Cart(request)
     product = get_object_or_404(Product, id=product_id)
     quantity = int(request.POST.get('quantity', 1))
-    override = request.POST.get('override', False)
+    override = request.POST.get('override') == 'True'
     cart.add(product=product, quantity=quantity, override_quantity=override)
     return redirect('shopping_cart')
 
@@ -399,3 +406,54 @@ def admin_reports(request):
     }
 
     return render(request,"admin/reports.html",context)
+
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from django.core.mail import send_mail
+from django.conf import settings
+from .models import ContactMessage
+
+def contact_view(request):
+    if request.method == "POST":
+        name = request.POST.get("name", "").strip()
+        email = request.POST.get("email", "").strip()
+        subject = request.POST.get("subject", "").strip()
+        message = request.POST.get("message", "").strip()
+
+        if not name or not email or not subject or not message:
+            messages.error(request, "All fields are required.")
+            return render(request, "contact.html")
+
+        ContactMessage.objects.create(
+            name=name,
+            email=email,
+            subject=subject,
+            message=message
+        )
+
+        full_message = f"""
+New Contact Form Submission
+
+Name: {name}
+Email: {email}
+Subject: {subject}
+
+Message:
+{message}
+"""
+
+        try:
+            send_mail(
+                subject=f"Contact Form: {subject}",
+                message=full_message,
+                from_email=settings.DEFAULT_FROM_EMAIL,
+                recipient_list=[settings.DEFAULT_FROM_EMAIL],
+                fail_silently=False,
+            )
+        except Exception:
+            pass
+
+        messages.success(request, "Your message has been sent successfully.")
+        return redirect("contact")
+
+    return render(request, "contact.html")

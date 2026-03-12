@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+            padding:20px;
+        }
+
+        .login-wrapper{
+            width:100%;
+            max-width:430px;
+            background:#fff;
+            border-radius:16px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.12);
+            padding:32px 28px;
+        }
+
+        .login-wrapper h2{
+            text-align:center;
+            margin-bottom:8px;
+            color:#222;
+        }
+
+        .login-wrapper .sub-text{
+            text-align:center;
+            color:#666;
+            font-size:14px;
+            margin-bottom:24px;
+        }
+
+        .alert{
+            padding:12px 14px;
+            border-radius:8px;
+            margin-bottom:15px;
+            font-size:14px;
+        }
+
+        .alert-error{
+            background:#ffe5e5;
+            color:#b30000;
+        }
+
+        .alert-success{
+            background:#e7f8ec;
+            color:#1f7a3d;
+        }
+
+        .form-group{
+            margin-bottom:18px;
+        }
+
+        .form-group label{
+            display:block;
+            margin-bottom:8px;
+            font-size:14px;
+            font-weight:600;
+            color:#333;
+        }
+
+        .form-control{
+            width:100%;
+            padding:12px 14px;
+            border:1px solid #ccc;
+            border-radius:10px;
+            font-size:14px;
+            outline:none;
+            transition:0.3s;
+        }
+
+        .form-control:focus{
+            border-color:#4a90e2;
+            box-shadow:0 0 0 3px rgba(74,144,226,0.15);
+        }
+
+        .password-box{
+            position:relative;
+        }
+
+        .toggle-password{
+            position:absolute;
+            right:14px;
+            top:50%;
+            transform:translateY(-50%);
+            cursor:pointer;
+            font-size:13px;
+            color:#4a90e2;
+            font-weight:600;
+            user-select:none;
+        }
+
+        .field-error{
+            color:#d90429;
+            font-size:13px;
+            margin-top:6px;
+        }
+
+        .row-options{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            gap:10px;
+            margin-bottom:20px;
+            font-size:14px;
+        }
+
+        .remember-me{
+            display:flex;
+            align-items:center;
+            gap:8px;
+            color:#444;
+        }
+
+        .remember-me input{
+            width:auto;
+        }
+
+        .row-options a,
+        .bottom-text a{
+            text-decoration:none;
+            color:#4a90e2;
+            font-weight:600;
+        }
+
+        .row-options a:hover,
+        .bottom-text a:hover{
+            text-decoration:underline;
+        }
+
+        .btn-login{
+            width:100%;
+            padding:12px;
+            border:none;
+            border-radius:10px;
+            background:#4a90e2;
+            color:#fff;
+            font-size:15px;
+            font-weight:600;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        .btn-login:hover{
+            background:#357abd;
+        }
+
+        .bottom-text{
+            text-align:center;
+            margin-top:18px;
+            font-size:14px;
+            color:#555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-wrapper">
+        <h2>Customer Sign In</h2>
+        <p class="sub-text">Login to access your account and continue shopping</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert 
+                    {% if message.tags == 'error' %}alert-error{% else %}alert-success{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="alert alert-error">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'customer_login' %}">
+            {% csrf_token %}
+
+            {% if next %}
+                <input type="hidden" name="next" value="{{ next }}">
+            {% endif %}
+
+            <div class="form-group">
+                <label for="id_username">Email or Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="id_username"
+                    class="form-control"
+                    placeholder="Enter your email or username"
+                    value="{{ form.username.value|default:'' }}"
+                    required
+                >
+                {% if form.username.errors %}
+                    {% for error in form.username.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label for="id_password">Password</label>
+                <div class="password-box">
+                    <input
+                        type="password"
+                        name="password"
+                        id="id_password"
+                        class="form-control"
+                        placeholder="Enter your password"
+                        required
+                    >
+                    <span class="toggle-password" onclick="togglePassword()">Show</span>
+                </div>
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <div class="field-error">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+
+            <div class="row-options">
+                <label class="remember-me">
+                    <input type="checkbox" name="remember_me" id="remember_me"
+                        {% if request.POST.remember_me %}checked{% endif %}>
+                    Remember me
+                </label>
+
+                <a href="{% url 'forgot_password' %}">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn-login">Sign In</button>
+
+            <p class="bottom-text">
+                Don’t have an account?
+                <a href="{% url 'customer_register' %}">Create Account</a>
+            </p>
+        </form>
+    </div>
+
+    <script>
+        function togglePassword() {
+            const passwordInput = document.getElementById("id_password");
+            const toggleBtn = document.querySelector(".toggle-password");
+
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                toggleBtn.textContent = "Hide";
+            } else {
+                passwordInput.type = "password";
+                toggleBtn.textContent = "Show";
+            }
+        }
+    </script>
+
+</body>
+</html>
