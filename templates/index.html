@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Male-Fashion | Home{% endblock %}
+{% block title %}AR Handlooms | Home{% endblock %}
 
 {% block content %}
 <!-- Hero Section Begin -->
@@ -10,10 +10,10 @@
         <div class="hero__items set-bg" data-setbg="{% static 'img\hero\hero-1.jpg' %}">
             <div class="container">
                 <div class="row">
-                    <div class="col-xl-5 col-lg-7 col-md-8">
+                    <div class="col-xl-6 col-lg-7 col-md-8">
                         <div class="hero__text">
-                            <h6>Kerala Traditional Collection</h6>
-                            <h2>Authentic Kasavu & Handloom Fashion</h2>
+                            <h6 style="letter-spacing: 4px; color: var(--accent-color);">KERALA TRADITIONAL</h6>
+                            <h2 style="font-size: 60px; line-height: 1.1; margin-bottom: 25px;">Authentic Kasavu & Handloom Fashion</h2>
                             <p>
                                 Discover the elegance of Kerala tradition with our exclusive collection 
                                 of Kasavu sarees, mundu, set mundu, and handcrafted ethnic wear. 
@@ -137,8 +137,10 @@
                         <form action="{% url 'cart_add' product.id %}" method="post">
                             {% csrf_token %}
                             <button type="submit" class="add-cart"
-                                style="border: none; background: none; color: #e63333; font-weight: 700; cursor: pointer;">+
-                                Add To Cart</button>
+                                style="border: none; background: none; color: var(--primary-color); font-weight: 700; cursor: pointer; transition: 0.3s; border-bottom: 2px solid transparent;"
+                                onmouseover="this.style.color='var(--accent-color)'; this.style.borderBottom='2px solid var(--accent-color)'"
+                                onmouseout="this.style.color='var(--primary-color)'; this.style.borderBottom='2px solid transparent'">+
+                                ADD TO CART</button>
                         </form>
                         <div class="rating">
                             <i class="fa fa-star-o"></i>

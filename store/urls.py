@@ -14,6 +14,7 @@ urlpatterns = [
     path('cart/update/', views.cart_update, name='cart_update'),
     path('search/', views.search, name='search'),
     path('checkout/', views.checkout, name='checkout'),
+    path('checkout/success/', views.checkout_success, name='checkout_success'),
     path('wishlist/', views.wishlist_detail, name='wishlist_detail'),
     path('wishlist/add/<int:product_id>/', views.wishlist_add, name='wishlist_add'),
     path('wishlist/remove/<int:product_id>/', views.wishlist_remove, name='wishlist_remove'),
@@ -23,6 +24,8 @@ urlpatterns = [
     #admin urls
     path('admin-login/', views.admin_login, name='admin_login'),
     path('admin-logout/', views.admin_logout, name='admin_logout'),
+    path('admin-change-password/', views.admin_change_password, name='admin_change_password'),
+    path('admin-forgot-password/', views.admin_forgot_password, name='admin_forgot_password'),
     path('dashboard/', views.admin_dashboard, name='admin_dashboard'),
     path('dashboard/inventory/', views.inventory, name='inventory'),
     path('dashboard/products/', views.admin_products, name='admin_products'),

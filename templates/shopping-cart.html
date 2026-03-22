@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Male-Fashion | Shopping Cart{% endblock %}
+{% block title %}AR Handlooms | Shopping Cart{% endblock %}
 
 {% block content %}
-<!-- Breadcrumb Section Begin -->
+{% block breadcrumb %}
 <section class="breadcrumb-option">
     <div class="container">
         <div class="row">
@@ -21,7 +21,7 @@
         </div>
     </div>
 </section>
-<!-- Breadcrumb Section End -->
+{% endblock %}
 
 <!-- Shopping Cart Section Begin -->
 <section class="shopping-cart spad">
@@ -141,7 +141,14 @@
                         <li>Subtotal <span>₹ {{ cart.get_total_price }}</span></li>
                         <li>Total <span>₹ {{ cart.get_total_price }}</span></li>
                     </ul>
-                    <a href="{% url 'checkout' %}" class="primary-btn">Proceed to checkout</a>
+
+                    {% if cart and cart.get_total_price > 0 %}
+                        <a href="{% url 'checkout' %}" class="primary-btn">Proceed to checkout</a>
+                    {% else %}
+                        <button class="primary-btn" disabled style="opacity:0.6; cursor:not-allowed;">
+                            Add items to cart first
+                        </button>
+                    {% endif %}
                 </div>
             </div>
         </div>

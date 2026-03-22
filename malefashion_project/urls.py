@@ -26,6 +26,7 @@ def admin_redirect(request):
 urlpatterns = [
     path('admin/', admin_redirect),
     path('', include('store.urls')),
+    path('customer/', include('customer.urls')),
 ]
 
 if settings.DEBUG:
