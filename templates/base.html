@@ -13,7 +13,9 @@
     <!-- Google Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
 
     <!-- Css Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,64 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
-    <style>
-        :root {
-            --primary-color: #111;
-            --accent-color: #e63333;
-            --font-heading: 'Playfair Display', serif;
-            --font-body: 'Outfit', sans-serif;
-            --bg-light: #f8f9fa;
-        }
-        body {
-            font-family: var(--font-body);
-            color: #333;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-family: var(--font-heading);
-            font-weight: 700;
-        }
-        .header__menu ul li a {
-            font-family: var(--font-body);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 500;
-        }
-        .primary-btn {
-            font-family: var(--font-body);
-            font-weight: 600;
-            background: var(--primary-color);
-            transition: all 0.3s;
-        }
-        .primary-btn:hover {
-            background: var(--accent-color);
-        }
-        .footer {
-            background: #111;
-            padding-top: 70px;
-        }
-        .footer__widget h6 {
-            color: #fff;
-            margin-bottom: 25px;
-            font-family: var(--font-heading);
-        }
-        .header__logo img {
-            max-height: 50px;
-        }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-    </style>
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" type="text/css">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -90,35 +35,6 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                {% if user.is_authenticated and not user.is_staff %}
-                    <a href="{% url 'customer_profile' %}">My Account</a>
-                    <a href="{% url 'customer_logout' %}">Logout</a>
-                {% else %}
-                    <a href="{% url 'customer_login' %}">Sign in</a>
-                {% endif %}
-                <a href="#">FAQs</a>
-            </div>
-        </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
-            <a href="{% url 'wishlist_detail' %}"><img src="{% static 'img/icon/heart.png' %}" alt=""> <span>{{
-                    wishlist|length }}</span></a>
-            <a href="{% url 'shopping_cart' %}"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{ cart|length
-                    }}</span></a>
-            <div class="price">₹{{ cart.get_total_price }}</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
     <header class="header">
@@ -134,10 +50,10 @@
                         <div class="header__top__right">
                             <div class="header__top__links">
                                 {% if user.is_authenticated and not user.is_staff %}
-                                    <a href="{% url 'customer_profile' %}">My Account</a>
-                                    <a href="{% url 'customer_logout' %}">Logout</a>
+                                <a href="{% url 'customer_profile' %}">My Account</a>
+                                <a href="{% url 'customer_logout' %}">Logout</a>
                                 {% else %}
-                                    <a href="{% url 'customer_login' %}">Sign in</a>
+                                <a href="{% url 'customer_login' %}">Sign in</a>
                                 {% endif %}
                                 <a href="#">FAQs</a>
                             </div>
@@ -166,6 +82,7 @@
                                     <li><a href="{% url 'shop' %}?category=mens">Mens</a></li>
                                     <li><a href="{% url 'shop' %}?category=womens">Womens</a></li>
                                     <li><a href="{% url 'shop' %}?category=kids">Kids</a></li>
+                                    <li><a href="{% url 'shop' %}?category=wedding">Wedding</a></li>
                                 </ul>
                             </li>
 
@@ -185,13 +102,10 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <form action="{% url 'search' %}" method="get"
-                            style="display: inline-block; margin-right: 15px; position: relative;">
-                            <input type="text" name="q" placeholder="Search..."
-                                style="border: 1px solid #e1e1e1; padding: 5px 10px 5px 30px; border-radius: 20px; width: 150px; font-size: 14px;">
-                            <button type="submit"
-                                style="background: none; border: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); padding: 0;">
-                                <img src="{% static 'img/icon/search.png' %}" alt="" style="width: 15px;">
+                        <form action="{% url 'search' %}" method="get" class="header-search-form">
+                            <input type="text" name="q" placeholder="Search...">
+                            <button type="submit">
+                                <img src="{% static 'img/icon/search.png' %}" alt="" class="search-icon-img">
                             </button>
                         </form>
                         <a href="{% url 'wishlist_detail' %}"><img src="{% static 'img/icon/heart.png' %}" alt="">

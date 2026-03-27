@@ -7,13 +7,13 @@
 <!-- Hero Section Begin -->
 <section class="hero">
     <div class="hero__slider owl-carousel">
-        <div class="hero__items set-bg" data-setbg="{% static 'img\hero\hero-1.jpg' %}">
+        <div class="hero__items set-bg" data-setbg="{% static 'img\hero\hero-1.png' %}">
             <div class="container">
                 <div class="row">
                     <div class="col-xl-6 col-lg-7 col-md-8">
                         <div class="hero__text">
-                            <h6 style="letter-spacing: 4px; color: var(--accent-color);">KERALA TRADITIONAL</h6>
-                            <h2 style="font-size: 60px; line-height: 1.1; margin-bottom: 25px;">Authentic Kasavu & Handloom Fashion</h2>
+                            <h6 class="hero-subtitle">KERALA TRADITIONAL</h6>
+                            <h2 class="hero-title">Authentic Kasavu & Handloom Fashion</h2>
                             <p>
                                 Discover the elegance of Kerala tradition with our exclusive collection 
                                 of Kasavu sarees, mundu, set mundu, and handcrafted ethnic wear. 
@@ -63,48 +63,49 @@
     </div>
 </section>
 <!-- Hero Section End -->
+<!-- Modern Banner Section -->
+<section class="banner-modern py-5">
+  <div class="container">
+    <div class="row g-4">
 
-<!-- Banner Section Begin -->
-<section class="banner spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-7 offset-lg-4">
-                <div class="banner__item">
-                    <div class="banner__item__pic">
-                        <img src="{% static 'img/banner/banner-1.jpg' %}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Mens 2026</h2>
-                        <a href="{% url 'shop' %}">Shop now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-5">
-                <div class="banner__item banner__item--middle">
-                    <div class="banner__item__pic">
-                        <img src="{% static 'img/banner/banner-2.jpg' %}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2> Kids </h2>
-                        <a href="{% url 'shop' %}">Shop now</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="banner__item banner__item--last">
-                    <div class="banner__item__pic">
-                        <img src="{% static 'img/banner/banner-3.jpg' %}" alt="">
-                    </div>
-                    <div class="banner__item__text">
-                        <h2>Womens 2026</h2>
-                        <a href="{% url 'shop' %}">Shop now</a>
-                    </div>
-                </div>
-            </div>
+      <!-- Men's -->
+      <div class="col-lg-4 col-md-6">
+        <div class="banner-card">
+          <img src="{% static 'img/banner/banner-1.png' %}" alt="Mens">
+          <div class="banner-overlay">
+            <h3>Men's</h3>
+            <a href="{% url 'shop' %}?category=mens" class="btn-shop">Shop Now</a>
+          </div>
         </div>
+      </div>
+
+      <!-- Kids -->
+      <div class="col-lg-4 col-md-6">
+        <div class="banner-card">
+          <img src="{% static 'img/banner/banner-2.png' %}" alt="Kids">
+          <div class="banner-overlay">
+            <h3>Kids</h3>
+            <a href="{% url 'shop' %}?category=kids" class="btn-shop">Shop Now</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Women's -->
+      <div class="col-lg-4 col-md-12">
+        <div class="banner-card">
+          <img src="{% static 'img/banner/banner-3.png' %}" alt="Womens">
+          <div class="banner-overlay">
+            <h3>Women's</h3>
+            <a href="{% url 'shop' %}?category=womens" class="btn-shop">Shop Now</a>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 </section>
-<!-- Banner Section End -->
+
+<!-- CSS separated to custom.css -->
 
 <!-- Product Section Begin -->
 <section class="product spad">
@@ -136,10 +137,7 @@
                         <h6>{{ product.name }}</h6>
                         <form action="{% url 'cart_add' product.id %}" method="post">
                             {% csrf_token %}
-                            <button type="submit" class="add-cart"
-                                style="border: none; background: none; color: var(--primary-color); font-weight: 700; cursor: pointer; transition: 0.3s; border-bottom: 2px solid transparent;"
-                                onmouseover="this.style.color='var(--accent-color)'; this.style.borderBottom='2px solid var(--accent-color)'"
-                                onmouseout="this.style.color='var(--primary-color)'; this.style.borderBottom='2px solid transparent'">+
+                            <button type="submit" class="add-cart add-cart-custom">+
                                 ADD TO CART</button>
                         </form>
                         <div class="rating">
@@ -163,86 +161,111 @@
 </section>
 <!-- Product Section End -->
 
-<!-- Categories Section Begin -->
-<section class="categories spad">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="categories__text">
-                    <h2>Kerala Traditional<br /> <span>Saree Collection</span> <br />Kerala Heritage Collection</h2>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="categories__hot__deal">
-                    <img src="{% static 'img/product-sale.png' %}" alt="">
-                    <div class="hot__deal__sticker">
-                        <span>Sale Of</span>
-                        <h5>₹29.99</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 offset-lg-1">
-                <div class="categories__deal__countdown">
-                    <span>Deal Of The Week</span>
-                    <h2>Multi-pocket Chest Bag</h2>
-                    <div class="categories__deal__countdown__timer" id="countdown">
-                        <div class="cd-item">
-                            <span>3</span>
-                            <p>Days</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>1</span>
-                            <p>Hours</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>50</span>
-                            <p>Minuets</p>
-                        </div>
-                        <div class="cd-item">
-                            <span>18</span>
-                            <p>Seconds</p>
-                        </div>
-                    </div>
-                    <a href="{% url 'shop' %}" class="primary-btn">Shop now</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Categories Section End -->
+<section class="wedding-banner">
+  <div class="wedding-media">
+    
+    <video autoplay muted loop playsinline class="wedding-video">
+      <source src="{% static 'img/banner/arh.mp4' %}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
 
-<!-- Instagram Section Begin -->
-<section class="instagram spad">
+  </div>
+
+  <div class="wedding-overlay">
+    <h2 class="wedding-text">Wedding Collections</h2>
+    <p class="wedding-text">Elegance crafted for your special moments</p>
+    <a href="{% url 'shop' %}?category=wedding" class="wedding-btn">Explore Now</a>
+</div>
+</section>
+<!-- Wedding Collection Banner End -->
+ <style>
+.wedding-banner {
+  position: relative;
+  width: 100%;
+  height: 80vh; /* increased from ~60vh */
+  overflow: hidden;
+}
+
+.wedding-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wedding-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #fff;
+}
+
+.wedding-text {
+  margin: 10px 0;
+}
+
+.wedding-text:first-child {
+  font-size: 48px; /* bigger heading */
+}
+
+.wedding-text:last-child {
+  font-size: 20px;
+}
+
+.wedding-btn {
+  margin-top: 15px;
+  padding: 12px 30px;
+  background: #caa511;
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 5px;
+}
+.wedding:hover{
+  background-color: #fff;
+  color: #caa511;
+}
+</style>
+<!-- Wedding CSS separated to custom.css -->
+
+<!-- AR Handlooms Section Begin -->
+<section class="instagram spad ar-handloom">
     <div class="container">
         <div class="row">
+            
+            <!-- Images -->
             <div class="col-lg-8">
-                <div class="instagram__pic">
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-1.jpg' %}">
-                    </div>
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-2.jpg' %}">
-                    </div>
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-3.jpg' %}">
-                    </div>
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-4.jpg' %}">
-                    </div>
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-5.jpg' %}">
-                    </div>
-                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-6.jpg' %}">
-                    </div>
+                <div class="instagram__pic"> 
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-1.jpg' %}"> </div>
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-2.jpg' %}"> </div>
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-3.jpg' %}"> </div> 
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-4.jpg' %}"> </div> 
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-5.jpg' %}"> </div> 
+                    <div class="instagram__pic__item set-bg" data-setbg="{% static 'img/instagram/instagram-6.jpg' %}"> </div>
                 </div>
             </div>
+
+            <!-- Text -->
             <div class="col-lg-4">
                 <div class="instagram__text">
-                    <h2>Instagram</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                        labore et dolore magna aliqua.</p>
-                    <h3>#Male_Fashion</h3>
+                    <h2>AR Handlooms</h2>
+                    <p>
+                        Discover the elegance of traditional Kerala handloom craftsmanship from Kuthampully. 
+                        Each piece is carefully woven with heritage, quality, and timeless design.
+                    </p>
+                    <h3>#arhandlooms #kuthampully</h3>
+
+                    <a href="{% url 'shop' %}" class="ar-btn">Explore Collection</a>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
-<!-- Instagram Section End -->
+<!-- AR Handlooms Section End -->
+
+<!-- AR Handlooms CSS separated to custom.css -->
 
 <!-- Latest Blog Section Begin -->
 <section class="latest spad">
