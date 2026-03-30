@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views, admin_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -42,3 +44,6 @@ urlpatterns = [
     path('dashboard/orders/', admin_views.admin_orders, name='admin_orders'),
     path('dashboard/order/<int:id>/', admin_views.admin_order_detail, name='admin_order_detail'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
