@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Order Successful | AR Handlooms{% endblock %}
+
+{% block content %}
+<section class="checkout-success spad">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <div class="checkout__success__icon mb-4">
+                    <i class="fa fa-check-circle-o" style="font-size: 80px; color: #198754;"></i>
+                </div>
+                <h2 class="fw-bold mb-3">Thank You for Your Order!</h2>
+                <p class="lead text-muted mb-5">
+                    Your order has been placed successfully. We are now processing it and will notify you once it's shipped.
+                </p>
+                <div class="checkout__success__actions mb-5">
+                    <a href="{% url 'shop' %}" class="primary-btn me-3">Continue Shopping</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'customer_orders' %}" class="primary-btn outline-btn" style="background: transparent; color: #111; border: 2px solid #111;">View My Orders</a>
+                    {% endif %}
+                </div>
+                <div class="card border-0 shadow-sm p-4 text-start">
+                    <h5 class="fw-bold mb-3">Next Steps:</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fa fa-envelope-o me-2 text-primary"></i> An order confirmation email has been sent to your email address.</li>
+                        <li class="mb-2"><i class="fa fa-truck me-2 text-primary"></i> You will receive another notification when your order is on its way.</li>
+                        <li><i class="fa fa-question-circle-o me-2 text-primary"></i> If you have any questions, please contact our support team.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .outline-btn:hover {
+        background: #111 !important;
+        color: #fff !important;
+    }
+    .checkout-success {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+</style>
+{% endblock %}

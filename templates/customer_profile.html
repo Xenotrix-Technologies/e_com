@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile | AR Handlooms{% endblock %}
+
+{% block extra_css %}
+<style>
+    .profile-card {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+    .profile-header {
+        border-bottom: 1px solid #ebebeb;
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+    }
+    .profile-header h3 {
+        font-weight: 700;
+        color: #111;
+        margin-bottom: 0;
+    }
+    .sidebar-list {
+        list-style: none;
+        padding: 0;
+    }
+    .sidebar-list li a {
+        display: block;
+        padding: 12px 15px;
+        color: #666;
+        text-decoration: none;
+        border-radius: 8px;
+        transition: 0.3s;
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+    .sidebar-list li a:hover, .sidebar-list li a.active {
+        background: #f5f5f5;
+        color: #111;
+    }
+    .sidebar-list li a i {
+        margin-right: 10px;
+        width: 20px;
+    }
+    .btn-update {
+        background: #111;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: 0.3s;
+    }
+    .btn-update:hover {
+        background: #333;
+        color: #fff;
+    }
+    .breadcrumb-section {
+        padding: 40px 0;
+        background: #f3f2ee;
+    }
+    .breadcrumb__text h4 {
+        color: #111;
+        font-weight: 700;
+        margin-bottom: 8px;
+    }
+    .breadcrumb__links a {
+        font-size: 15px;
+        color: #111;
+        margin-right: 18px;
+        display: inline-block;
+        position: relative;
+    }
+    .breadcrumb__links a:after {
+        position: absolute;
+        right: -13px;
+        top: 0;
+        content: "/";
+        color: #888;
+    }
+    .breadcrumb__links span {
+        font-size: 15px;
+        color: #b7b7b7;
+        display: inline-block;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb Section Begin -->
+<section class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="breadcrumb__text">
+                    <h4>My Account</h4>
+                    <div class="breadcrumb__links">
+                        <a href="{% url 'index' %}">Home</a>
+                        <span>My Profile</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Breadcrumb Section End -->
+
+<section class="spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="profile-card">
+                    <ul class="sidebar-list">
+                        <li><a href="{% url 'customer_profile' %}" class="active"><i class="fa fa-user"></i> My Profile</a></li>
+                        <li><a href="{% url 'customer_orders' %}"><i class="fa fa-shopping-bag"></i> My Orders</a></li>
+                        <li><a href="{% url 'customer_change_password' %}"><i class="fa fa-key"></i> Change Password</a></li>
+                        <li><a href="{% url 'customer_logout' %}" style="color: #d90429;"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h3>Profile Information</h3>
+                    </div>
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-success{% endif %} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <form method="POST" action="{% url 'customer_profile' %}">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label" style="font-weight: 600;">First Name</label>
+                                    <input type="text" name="first_name" class="form-control" value="{{ user.first_name }}" required>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="mb-3">
+                                    <label class="form-label" style="font-weight: 600;">Last Name</label>
+                                    <input type="text" name="last_name" class="form-control" value="{{ user.last_name }}" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600;">Username (cannot be changed)</label>
+                            <input type="text" class="form-control" value="{{ user.username }}" disabled style="background: #f9f9f9;">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" style="font-weight: 600;">Email Address</label>
+                            <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                        </div>
+
+                        <button type="submit" class="btn-update">Update Profile</button>
+                    </form>
+                </div>
+
+                <div class="profile-card">
+                    <div class="profile-header">
+                        <h3>Account Summary</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded text-center">
+                                <h4 class="mb-1" style="font-weight: 700;">{{ user.orders.count }}</h4>
+                                <p class="mb-0 text-muted">Total Orders</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 border rounded text-center">
+                                <h4 class="mb-1" style="font-weight: 700;">{{ request.user.date_joined|date:"M Y" }}</h4>
+                                <p class="mb-0 text-muted">Member Since</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

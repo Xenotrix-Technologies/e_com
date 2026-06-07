@@ -8,10 +8,13 @@
     <meta name="keywords" content="Male_Fashion, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{% block title %}Male-Fashion | Template{% endblock %}</title>
+    <title>{% block title %}AR Handlooms{% endblock %}</title>
 
     <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
         rel="stylesheet">
 
     <!-- Css Styles -->
@@ -23,6 +26,7 @@
     <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/slicknav.min.css' %}" type="text/css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}" type="text/css">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -31,30 +35,6 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
-    <!-- Offcanvas Menu Begin -->
-    <div class="offcanvas-menu-overlay"></div>
-    <div class="offcanvas-menu-wrapper">
-        <div class="offcanvas__option">
-            <div class="offcanvas__links">
-                <a href="#">Sign in</a>
-                <a href="#">FAQs</a>
-            </div>
-        </div>
-        <div class="offcanvas__nav__option">
-            <a href="#" class="search-switch"><img src="{% static 'img/icon/search.png' %}" alt=""></a>
-            <a href="{% url 'wishlist_detail' %}"><img src="{% static 'img/icon/heart.png' %}" alt=""> <span>{{
-                    wishlist|length }}</span></a>
-            <a href="{% url 'shopping_cart' %}"><img src="{% static 'img/icon/cart.png' %}" alt=""> <span>{{ cart|length
-                    }}</span></a>
-            <div class="price">₹{{ cart.get_total_price }}</div>
-        </div>
-        <div id="mobile-menu-wrap"></div>
-        <div class="offcanvas__text">
-            <p>Free shipping, 30-day return or refund guarantee.</p>
-        </div>
-    </div>
-    <!-- Offcanvas Menu End -->
 
     <!-- Header Section Begin -->
     <header class="header">
@@ -69,7 +49,12 @@
                     <div class="col-lg-6 col-md-5">
                         <div class="header__top__right">
                             <div class="header__top__links">
-                                <a href="#">Sign in</a>
+                                {% if user.is_authenticated and not user.is_staff %}
+                                <a href="{% url 'customer_profile' %}">My Account</a>
+                                <a href="{% url 'customer_logout' %}">Logout</a>
+                                {% else %}
+                                <a href="{% url 'customer_login' %}">Sign in</a>
+                                {% endif %}
                                 <a href="#">FAQs</a>
                             </div>
                         </div>
@@ -97,6 +82,7 @@
                                     <li><a href="{% url 'shop' %}?category=mens">Mens</a></li>
                                     <li><a href="{% url 'shop' %}?category=womens">Womens</a></li>
                                     <li><a href="{% url 'shop' %}?category=kids">Kids</a></li>
+                                    <li><a href="{% url 'shop' %}?category=wedding">Wedding</a></li>
                                 </ul>
                             </li>
 
@@ -116,13 +102,10 @@
                 </div>
                 <div class="col-lg-3 col-md-3">
                     <div class="header__nav__option">
-                        <form action="{% url 'search' %}" method="get"
-                            style="display: inline-block; margin-right: 15px; position: relative;">
-                            <input type="text" name="q" placeholder="Search..."
-                                style="border: 1px solid #e1e1e1; padding: 5px 10px 5px 30px; border-radius: 20px; width: 150px; font-size: 14px;">
-                            <button type="submit"
-                                style="background: none; border: none; position: absolute; left: 10px; top: 50%; transform: translateY(-50%); padding: 0;">
-                                <img src="{% static 'img/icon/search.png' %}" alt="" style="width: 15px;">
+                        <form action="{% url 'search' %}" method="get" class="header-search-form">
+                            <input type="text" name="q" placeholder="Search...">
+                            <button type="submit">
+                                <img src="{% static 'img/icon/search.png' %}" alt="" class="search-icon-img">
                             </button>
                         </form>
                         <a href="{% url 'wishlist_detail' %}"><img src="{% static 'img/icon/heart.png' %}" alt="">
@@ -138,6 +121,11 @@
     </header>
     <!-- Header Section End -->
 
+    <!-- Breadcrumb Section Begin -->
+    {% block breadcrumb %}
+    {% endblock %}
+    <!-- Breadcrumb Section End -->
+
     {% block content %}{% endblock %}
 
     <!-- Footer Section Begin -->
@@ -147,7 +135,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__logo">
-                            <a href="#"><img src="{% static 'img/footer-logo.png' %}" alt=""></a>
+                            <a href="#"><img src="{% static 'img/logo.png' %}" alt=""></a>
                         </div>
                         <p>The customer is at the heart of our unique business model, which includes design.</p>
                         <a href="#"><img src="{% static 'img/payment.png' %}" alt=""></a>

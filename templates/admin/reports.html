@@ -137,21 +137,16 @@ Filter
 
 {% for item in top_products %}
 
-<tr>
-
-<td class="d-flex align-items-center">
-
-<img src="{{ item.product.image.url }}" width="40" class="rounded me-2">
-
-{{ item.product.name }}
-
-</td>
-
-<td>{{ item.total_qty }}</td>
-
-<td>₹ {{ item.total_sales }}</td>
-
-</tr>
+                <tr>
+                    <td class="d-flex align-items-center">
+                        {% if item.product__image %}
+                            <img src="/media/{{ item.product__image }}" width="40" class="rounded me-2">
+                        {% endif %}
+                        {{ item.product__name }}
+                    </td>
+                    <td>{{ item.total_qty }}</td>
+                    <td>₹ {{ item.total_sales }}</td>
+                </tr>
 
 {% empty %}
 

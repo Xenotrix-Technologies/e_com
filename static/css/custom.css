@@ -1,0 +1,212 @@
+/* Custom Styles for Professional Look */
+
+:root {
+    --primary-color: #111;
+    --accent-color: #e63333;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Outfit', sans-serif;
+    --bg-light: #f8f9fa;
+}
+body {
+    font-family: var(--font-body);
+    color: #333;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+.header__menu ul li a {
+    font-family: var(--font-body);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 500;
+}
+.primary-btn {
+    font-family: var(--font-body);
+    font-weight: 600;
+    background: var(--primary-color);
+    transition: all 0.3s;
+}
+.primary-btn:hover {
+    background: var(--accent-color);
+}
+.footer {
+    background: #111;
+    padding-top: 70px;
+}
+.footer__widget h6 {
+    color: #fff;
+    margin-bottom: 25px;
+    font-family: var(--font-heading);
+}
+.header__logo img {
+    max-height: 50px;
+}
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.offcanvas__links a {
+    white-space: nowrap;
+}
+
+/* Header Search Form */
+.header-search-form {
+    display: inline-block;
+    margin-right: 15px;
+    position: relative;
+}
+.header-search-form input {
+    border: 1px solid #e1e1e1;
+    padding: 5px 10px 5px 30px;
+    border-radius: 20px;
+    width: 150px;
+    font-size: 14px;
+}
+.header-search-form button {
+    background: none;
+    border: none;
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0;
+}
+.search-icon-img {
+    width: 15px;
+}
+
+/* Banner Cards */
+.banner-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 19px;
+  transition: transform 0.4s ease;
+}
+.banner-card:hover img {
+  transform: scale(1.05);
+}
+
+/* Wedding Banner */
+.wedding-banner {
+  position: relative;
+  width: 100%;
+  height: 450px;
+  overflow: hidden;
+  border-radius: 19px;
+}
+.wedding-media img,
+.wedding-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 19px;
+}
+.wedding-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  border-radius: 19px;
+}
+.wedding-overlay h2 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+.wedding-overlay p {
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+.wedding-btn {
+  padding: 10px 25px;
+  background: #b08d57;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  transition: 0.3s;
+}
+.wedding-btn:hover {
+  background: #000;
+  color: #fff;
+}
+.wedding-text {
+  color: #d3b717;
+}
+
+/* AR Handloom Instagram */
+.ar-handloom .instagram__pic__item {
+    border-radius: 19px;
+    padding: 10px;
+    overflow: hidden;
+}
+.ar-handloom .instagram__text h2 {
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+.ar-handloom .instagram__text p {
+    margin-bottom: 20px;
+    color: #555;
+}
+.ar-handloom .instagram__text h3 {
+    margin-bottom: 20px;
+    color: #b08d57;
+}
+.ar-btn {
+    display: inline-block;
+    padding: 10px 25px;
+    background: #b08d57;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: 0.3s;
+}
+.ar-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* Add to Cart Custom Button */
+.add-cart-custom {
+    border: none;
+    background: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s;
+    border-bottom: 2px solid transparent;
+}
+.add-cart-custom:hover {
+    color: var(--accent-color);
+    border-bottom: 2px solid var(--accent-color);
+}
+
+/* Hero Inline Styles Replacement */
+h6.hero-subtitle {
+    letter-spacing: 4px;
+    color: var(--accent-color);
+}
+h2.hero-title {
+    font-size: 60px;
+    line-height: 1.1;
+    margin-bottom: 25px;
+}

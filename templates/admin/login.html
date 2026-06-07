@@ -40,6 +40,10 @@ class="form-control mb-3">
 Login
 </button>
 
+<div class="text-center mt-3">
+    <a href="{% url 'admin_forgot_password' %}" class="text-muted text-decoration-none small">Forgot Password?</a>
+</div>
+
 {% if error %}
 <p class="text-danger mt-2">
 {{ error }}
